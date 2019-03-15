@@ -1,6 +1,6 @@
-# CLA Licensing
+# clasim Licensing
 
-CLA is released under the terms of the 3-clause BSD license and under the copyright of Technische Universität Dresden. The software was primarily authored by Julian Rode.
+clasim is released under the terms of the 3-clause BSD license and under the copyright of Technische Universität Dresden. The software was primarily authored by Julian Rode.
 
 Copyright (c) 2019, Technische Universität Dresden
 
