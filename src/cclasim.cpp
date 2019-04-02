@@ -147,9 +147,6 @@ static struct PyModuleDef cclasim_module =
 };
 
 
-/*extern "C" void initcbrdu(void) {
-    (void)Py_InitModule("cbrdu", HelloMethods);
-}*/
 PyMODINIT_FUNC
 PyInit_cclasim(void)
 {
@@ -157,14 +154,3 @@ PyInit_cclasim(void)
 }
 
 
-
-        /*if (j == 0) {
-          std::ostringstream fname;
-          fname << "sA" << InitParameter.sAnimal << "_sP"
-                << InitParameter.sPopulation << "_t" << InitParameter.KTimes[i]
-                << ".dat";
-          std::fstream file;
-          file.open(fname.str().c_str(), std::ios_base::out);
-          file << a.get_cell();
-          file.close();
-        }*/
