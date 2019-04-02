@@ -101,18 +101,17 @@ std::string animal<cell_type>::get_result_str(void) {
 }
 
 template <typename cell_type> REAL animal<cell_type>::get_result(void) {
-  if (to_many_cells) return 1.0;
+  if (to_many_cells) return rInitParameter.mCells;
   return (REAL)hypgeo_func(RandGenerator, (unsigned int)LabelIndex[1],
                            (unsigned int)LabelIndex[0],
-                           (unsigned int)rInitParameter.mCells) /
-         (REAL)rInitParameter.mCells;
+                           (unsigned int)rInitParameter.mCells);
 }
 
 template <> REAL animal<cell_sym>::get_result(void) {
+  if (to_many_cells) return rInitParameter.mCells;
   return (REAL)hypgeo_func(RandGenerator, (unsigned int)LabelIndex[1],
                            (unsigned int)LabelIndex[0],
-                           (unsigned int)rInitParameter.mCells) /
-         (REAL)rInitParameter.mCells;
+                           (unsigned int)rInitParameter.mCells);
 }
 
 
