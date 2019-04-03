@@ -1,7 +1,7 @@
-# clapy - Simulate and analyse continuous labelling assays
+# clasim - Simulate continuous labeling assays
 
 
-`clapy` is a python module that allows to simulate continuous labelling assays.
+`clasim` is a python module that allows to simulate continuous labeling assays.
 
 In the example folder are the script to create the plots from the paper and an simple fit example.
 
@@ -15,8 +15,7 @@ python setup.py install
 
 ### Requirements
 
-You will need `matplotlib`, `numpy`, `pandas` and `scipy`.
-Furthermore, the you will need the `gsl` development package.
+You will need the `gsl` development package.
 
 To install `gsl` dependencies run:
 #### Ubuntu:
@@ -29,7 +28,6 @@ apt-get install gsl-bin libgsl0-dev
 dnf install gsl-devel
 ```
 
-## How to cite `clapy`
+## How to cite `clasim`
 
-We will soon publish a preprint about the underlying model. Please cite this
-preprint if you find cla usefull for your research.
+Rode, Julian, Torsten Goerke, Lutz Brusch, and Fabian Rost. “How Fast Are Cells Dividing: Probabilistic Model of Continuous Labeling Assays.” **bioRxiv**, 2019, 550574. https://doi.org/10.1101/550574.
