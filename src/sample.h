@@ -1,4 +1,4 @@
-// animal.h
+// sample.h
 #ifndef ANIMAL_H
 #define ANIMAL_H
 #include "types.h"
@@ -9,7 +9,7 @@
 
 
 template < typename cell_type>
-class animal
+class sample
 {
     URNG& RandGenerator;
     t_InitParameter& rInitParameter;
@@ -21,9 +21,9 @@ class animal
     REAL create_inittime(REAL Tc);
     int to_many_cells;
 public:
-    animal(t_InitParameter& rInit,unsigned nKTime,REAL ATc);
-    animal(t_InitParameter& rInit,unsigned nKTime,REAL ATc,int mode);
-    ~animal(void);
+    sample(t_InitParameter& rInit,unsigned nKTime,REAL ATc);
+    sample(t_InitParameter& rInit,unsigned nKTime,REAL ATc,int mode);
+    ~sample(void);
     REAL get_killtime();
     std::string get_cell(void);
     std::string get_result_str(void);
@@ -33,10 +33,10 @@ public:
 
 
 template <>
-REAL animal<cell_sym>::create_inittime(REAL Tc);
+REAL sample<cell_sym>::create_inittime(REAL Tc);
 template <>
-REAL animal<cell_sym>::get_result(void);
+REAL sample<cell_sym>::get_result(void);
 
 
-#include "animal.cpp"
+#include "sample.cpp"
 #endif

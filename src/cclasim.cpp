@@ -7,7 +7,7 @@
 #include <random>
 
 #include "types.h"
-#include "animal.h"
+#include "sample.h"
 #include "cell.h"
 #include "rand.h"
 
@@ -56,11 +56,11 @@ static PyObject *run_wrapper(PyObject *self, PyObject *args) {
   PyObject *pIn;
   t_InitParameter InitParameter;
   std::vector<REAL> Result;
-  int debug, seed,nA,nC,mC;
+  int mode, seed,nA,nC,mC;
   // parse arguments
   double GF, Tc, G1, S, G2M, sA, sP;
   if (!PyArg_ParseTuple(args, "iiiiOddddddi", &seed, &nA, &nC, &mC, &pIn, &GF,
-                        &G1, &S, &G2M, &sA, &sP, &debug)) {
+                        &G1, &S, &G2M, &sA, &sP, &mode)) {
     return NULL;
   }
 
@@ -84,43 +84,46 @@ static PyObject *run_wrapper(PyObject *self, PyObject *args) {
   static URNG generator;
   generator.seed(seed);
   InitParameter.urng = &generator;
-  //std::cout << "debug" << debug << "  seed  "<< seed <<  "\n" << InitParameter;
-  switch (debug) {
-  case 1: {
+  switch (mode) {
+  // asymetric cell division, daughter has mother's parameter
+  case 0: {
     r_lognorm rr(InitParameter.Tc, InitParameter.sPopulation);
     for (unsigned i = 0; i < InitParameter.KTimes.size(); i++) {
       for (int j = 0; j < InitParameter.nAnimals; j++) {
-        animal<cell_as> a(InitParameter, i, rr(generator));
+        sample<cell_as> a(InitParameter, i, rr(generator));
         a.run();
         Result.push_back(a.get_result());
       }
     }
   } break;
+  // symetric cell devision, daughters have same parameter but newly rolled
   case 2: {
     r_lognorm rr(InitParameter.Tc, InitParameter.sPopulation);
     for (unsigned i = 0; i < InitParameter.KTimes.size(); i++) {
       for (int j = 0; j < InitParameter.nAnimals; j++) {
-        animal<cell_sym> a(InitParameter, i, rr(generator));
+        sample<cell_sym> a(InitParameter, i, rr(generator));
         a.run();
         Result.push_back(a.get_result());
       }
     }
   } break;
+  // asymetric cell devision, daughter has mother's parameter, cells are initilizes with linear age incearsment 
   case 3: {
     r_lognorm rr(InitParameter.Tc, InitParameter.sPopulation);
     for (unsigned i = 0; i < InitParameter.KTimes.size(); i++) {
       for (int j = 0; j < InitParameter.nAnimals; j++) {
-        animal<cell_as> a(InitParameter, i, rr(generator),21);
+        sample<cell_as> a(InitParameter, i, rr(generator),21);
         a.run();
         Result.push_back(a.get_result());
       }
     }
   } break;
-  case 4: {
+  // asymetric cell division, daughter has newly rolled parameter
+  case 1: {
     r_lognorm rr(InitParameter.Tc, InitParameter.sPopulation);
     for (unsigned i = 0; i < InitParameter.KTimes.size(); i++) {
       for (int j = 0; j < InitParameter.nAnimals; j++) {
-        animal<cell_as_newd> a(InitParameter, i, rr(generator));
+        sample<cell_as_newd> a(InitParameter, i, rr(generator));
         a.run();
         Result.push_back(a.get_result());
       }
