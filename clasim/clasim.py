@@ -1,5 +1,5 @@
 from . import cclasim as _clasim
-
+import numpy as np
 
 def run(mode=2, samples=1000, nCells=100, mCells=100, times=[0.01,0.2,0.5], GF=1,
         G1=0.2, S=0.3, G2M=0.5, sCells=0.01, sSamples=0.01, seed=42):
