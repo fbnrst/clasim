@@ -65,6 +65,10 @@ template <> REAL sample<cell_sym>::create_inittime(REAL Tc) {
   return -Tc + fmod(exp_func(RandGenerator, Tc * 1.4426950408889634), Tc);
 }
 
+template <> REAL sample<cell_sym_uncorr>::create_inittime(REAL Tc) {
+  return -Tc + fmod(exp_func(RandGenerator, Tc * 1.4426950408889634), Tc);
+}
+
 template <typename cell_type> void sample<cell_type>::run() {
   if (to_many_cells) return;
   size_t i = 0;
@@ -115,3 +119,9 @@ template <> REAL sample<cell_sym>::get_result(void) {
 }
 
 
+template <> REAL sample<cell_sym_uncorr>::get_result(void) {
+  if (to_many_cells) return rInitParameter.mCells;
+  return (REAL)hypgeo_func(RandGenerator, (unsigned int)LabelIndex[1],
+                           (unsigned int)LabelIndex[0],
+                           (unsigned int)rInitParameter.mCells);
+}

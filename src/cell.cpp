@@ -155,3 +155,53 @@ void cell_sym::divideordie(std::vector<cell_sym> &cells,
     LabelIndex[Label]++;
   }
 }
+
+
+cell_sym_uncorr::cell_sym_uncorr(int Index, int Mother, t_InitParameter &rInit, REAL AnimalTc,
+                   REAL IAge, int Label, REAL KTime, REAL Tc, int GF, REAL fG1,
+                   REAL fS, REAL fG2M)
+    : cell_base(Index, Mother, rInit, AnimalTc, IAge, Label, KTime, Tc, GF, fG1,
+                fS, fG2M) {}
+
+cell_sym_uncorr::cell_sym_uncorr(const cell_as &obj) : cell_base(obj) {}
+
+cell_sym_uncorr::~cell_sym_uncorr() {}
+
+void cell_sym_uncorr::check_label(void) {
+  if (Label == -1) {
+    Label = 0;
+    if (InitAge > Tc * (-1 + fG1 + fS))
+      return;
+  }
+  if (Label == 0 && GF) {
+    if (InitAge + KillTime > Tc * (-1 + fG1))
+      Label = 1;
+    return;
+  }
+  return;
+}
+
+void cell_sym_uncorr::divideordie(std::vector<cell_sym_uncorr> &cells,
+                           std::array<int, 2> &LabelIndex) {
+  if (InitAge + KillTime > 0 && GF) {
+    int LastCell = cells.size();
+    // r_lognorm rr(AnimalTc,rInitParameter.sAnimal);
+    // REAL nTc = rr(*rInitParameter.urng);
+    double nTc =
+        lognorm_func(*rInitParameter.urng, AnimalTc, rInitParameter.sAnimal);
+    cell_sym_uncorr a(LastCell, Index, rInitParameter, AnimalTc, InitAge - nTc, Label,
+               KillTime, nTc, GF, fG1, fS, fG2M);
+    nTc =
+        lognorm_func(*rInitParameter.urng, AnimalTc, rInitParameter.sAnimal);
+    cell_sym_uncorr b(LastCell + 1, Index, rInitParameter, AnimalTc, InitAge - nTc,
+               Label, KillTime, nTc, GF, fG1, fS, fG2M);
+    if (cells.size()> 10000 ){
+         LabelIndex[Label]++;
+    }else{
+    cells.push_back(a);
+    cells.push_back(b);
+    }
+  } else {
+    LabelIndex[Label]++;
+  }
+}

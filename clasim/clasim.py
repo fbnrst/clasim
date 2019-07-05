@@ -11,6 +11,7 @@ def run(mode=2, samples=1000, nCells=100, mCells=100, times=[0.01,0.2,0.5], GF=1
          0 for 1 daughter cell clone
          1 for 1 daughter cell newly rolled Tc
          2 for 2 daughter cells with same newly rolled Tc
+         3 for 2 daughter cells with different newly rolled Tc
     samples : int
         number of samples per timepoint
     nCells : int

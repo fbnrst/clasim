@@ -108,7 +108,7 @@ static PyObject *run_wrapper(PyObject *self, PyObject *args) {
     }
   } break;
   // asymetric cell devision, daughter has mother's parameter, cells are initilizes with linear age incearsment 
-  case 3: {
+  case 99: {
     r_lognorm rr(InitParameter.Tc, InitParameter.sPopulation);
     for (unsigned i = 0; i < InitParameter.KTimes.size(); i++) {
       for (int j = 0; j < InitParameter.nAnimals; j++) {
@@ -129,7 +129,18 @@ static PyObject *run_wrapper(PyObject *self, PyObject *args) {
       }
     }
   } break;
-
+  // symetric cell devision, daughters have different parameter newly rolled
+  case 3: {
+    r_lognorm rr(InitParameter.Tc, InitParameter.sPopulation);
+    for (unsigned i = 0; i < InitParameter.KTimes.size(); i++) {
+      for (int j = 0; j < InitParameter.nAnimals; j++) {
+        sample<cell_sym_uncorr> a(InitParameter, i, rr(generator));
+        a.run();
+        Result.push_back(a.get_result());
+      }
+    }
+  } break;
+ 
   }
 
   return vectorToList_Float(Result);
