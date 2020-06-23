@@ -4,7 +4,7 @@
 `clasim` is a python module that allows to simulate continuous labeling assays.
 
 In the example folder are the script to create the plots from the paper and an simple fit example.
-
+The module was developed with python3. It may run in python2...
 
 ## Installation
 

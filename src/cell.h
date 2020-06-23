@@ -57,5 +57,15 @@ public:
     void divideordie(std::vector<cell_sym>& cells, std::array<int,2>& LabelIndex);
 };
 
+class cell_sym_uncorr : public  cell_base
+{
+public:
+    cell_sym_uncorr(int Index,int Mother, t_InitParameter& rInit, REAL AnimalTc, REAL IAge , int Label, REAL KTime ,REAL Tc, int GF,REAL fG1,REAL fS,REAL fG2M);
+    cell_sym_uncorr( const cell_as &obj );
+    ~cell_sym_uncorr();
+    void check_label(void);
+    void divideordie(std::vector<cell_sym_uncorr>& cells, std::array<int,2>& LabelIndex);
+};
+
 
 #endif

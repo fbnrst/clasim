@@ -1,11 +1,11 @@
-//animal.cpp
-#include "animal.h"
+//sample.cpp
+#include "sample.h"
 #include <string>
 #include <cmath>
 #include "rand.h"
 
 template <typename cell_type>
-animal<cell_type>::animal(t_InitParameter &rInit, unsigned nKTime, REAL ATc)
+sample<cell_type>::sample(t_InitParameter &rInit, unsigned nKTime, REAL ATc)
     : RandGenerator(*rInit.urng), rInitParameter(rInit),
       KillTime(rInitParameter.KTimes[nKTime]), AnimalTc(ATc),to_many_cells(0) {
   create_cells(1);
@@ -13,21 +13,21 @@ animal<cell_type>::animal(t_InitParameter &rInit, unsigned nKTime, REAL ATc)
 
 
 template <typename cell_type>
-animal<cell_type>::animal(t_InitParameter &rInit, unsigned nKTime, REAL ATc,int mode)
+sample<cell_type>::sample(t_InitParameter &rInit, unsigned nKTime, REAL ATc,int mode)
     : RandGenerator(*rInit.urng), rInitParameter(rInit),
       KillTime(rInitParameter.KTimes[nKTime]), AnimalTc(ATc),to_many_cells(0) {
   create_cells(mode);
 }
 
-template <typename cell_type> animal<cell_type>::~animal(void) {
+template <typename cell_type> sample<cell_type>::~sample(void) {
   cells.clear();
 }
 
-template <typename cell_type> REAL animal<cell_type>::get_killtime() {
+template <typename cell_type> REAL sample<cell_type>::get_killtime() {
   return KillTime;
 }
 
-template <typename cell_type> void animal<cell_type>::create_cells(int mode) {
+template <typename cell_type> void sample<cell_type>::create_cells(int mode) {
   long int ExpGenerataions = (long int)std::ceil(KillTime / AnimalTc) + 1;
   if (ExpGenerataions > 10){
     std::cout << "to many cells\n" << "cellls:   " << rInitParameter.nCells * (1 << ExpGenerataions) <<"\n";  
@@ -56,17 +56,21 @@ if (mode == 1){
   }
 }
 
-template <typename cell_type> REAL animal<cell_type>::create_inittime(REAL Tc) {
+template <typename cell_type> REAL sample<cell_type>::create_inittime(REAL Tc) {
   return -unif_func(RandGenerator, 0, Tc);
 }
 
 
-template <> REAL animal<cell_sym>::create_inittime(REAL Tc) {
+template <> REAL sample<cell_sym>::create_inittime(REAL Tc) {
   return -Tc + fmod(exp_func(RandGenerator, Tc * 1.4426950408889634), Tc);
 //  return -Tc + fmod(exp_func(RandGenerator, Tc * 0.6931471805599453), Tc);
 }
 
-template <typename cell_type> void animal<cell_type>::run() {
+template <> REAL sample<cell_sym_uncorr>::create_inittime(REAL Tc) {
+  return -Tc + fmod(exp_func(RandGenerator, Tc * 1.4426950408889634), Tc);
+}
+
+template <typename cell_type> void sample<cell_type>::run() {
   if (to_many_cells) return;
   size_t i = 0;
   do {
@@ -77,7 +81,7 @@ template <typename cell_type> void animal<cell_type>::run() {
   //std::cout << i <<"\n";
 }
 
-template <typename cell_type> std::string animal<cell_type>::get_cell(void) {
+template <typename cell_type> std::string sample<cell_type>::get_cell(void) {
   std::string s;
   s.append("index,M_Index,Tc ,i_Age,LI,GF \n");
   for (unsigned i = 0; i < cells.size(); i++) {
@@ -88,7 +92,7 @@ template <typename cell_type> std::string animal<cell_type>::get_cell(void) {
 }
 
 template <typename cell_type>
-std::string animal<cell_type>::get_result_str(void) {
+std::string sample<cell_type>::get_result_str(void) {
   std::string s;
   s.append("Unlabeld cells: ");
   s.append(std::to_string(LabelIndex[0]));
@@ -101,14 +105,14 @@ std::string animal<cell_type>::get_result_str(void) {
   return s;
 }
 
-template <typename cell_type> REAL animal<cell_type>::get_result(void) {
+template <typename cell_type> REAL sample<cell_type>::get_result(void) {
   if (to_many_cells) return rInitParameter.mCells;
   return (REAL)hypgeo_func(RandGenerator, (unsigned int)LabelIndex[1],
                            (unsigned int)LabelIndex[0],
                            (unsigned int)rInitParameter.mCells);
 }
 
-template <> REAL animal<cell_sym>::get_result(void) {
+template <> REAL sample<cell_sym>::get_result(void) {
   if (to_many_cells) return rInitParameter.mCells;
   return (REAL)hypgeo_func(RandGenerator, (unsigned int)LabelIndex[1],
                            (unsigned int)LabelIndex[0],
@@ -116,3 +120,9 @@ template <> REAL animal<cell_sym>::get_result(void) {
 }
 
 
+template <> REAL sample<cell_sym_uncorr>::get_result(void) {
+  if (to_many_cells) return rInitParameter.mCells;
+  return (REAL)hypgeo_func(RandGenerator, (unsigned int)LabelIndex[1],
+                           (unsigned int)LabelIndex[0],
+                           (unsigned int)rInitParameter.mCells);
+}
