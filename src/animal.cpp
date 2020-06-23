@@ -30,7 +30,7 @@ template <typename cell_type> REAL animal<cell_type>::get_killtime() {
 template <typename cell_type> void animal<cell_type>::create_cells(int mode) {
   long int ExpGenerataions = (long int)std::ceil(KillTime / AnimalTc) + 1;
   if (ExpGenerataions > 10){
-    //std::cout << "to many cells\n" << "cellls:   " << rInitParameter.nCells * (1 << ExpGenerataions) <<"\n";  
+    std::cout << "to many cells\n" << "cellls:   " << rInitParameter.nCells * (1 << ExpGenerataions) <<"\n";  
     to_many_cells = 1;
     return ;
     }
@@ -63,6 +63,7 @@ template <typename cell_type> REAL animal<cell_type>::create_inittime(REAL Tc) {
 
 template <> REAL animal<cell_sym>::create_inittime(REAL Tc) {
   return -Tc + fmod(exp_func(RandGenerator, Tc * 1.4426950408889634), Tc);
+//  return -Tc + fmod(exp_func(RandGenerator, Tc * 0.6931471805599453), Tc);
 }
 
 template <typename cell_type> void animal<cell_type>::run() {

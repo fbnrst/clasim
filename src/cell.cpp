@@ -69,7 +69,7 @@ void cell_as::divideordie(std::vector<cell_as> &cells,
     int LastCell = cells.size();
     cell_as a(LastCell, Index, rInitParameter, AnimalTc, InitAge - Tc, Label,
               KillTime, Tc, GF, fG1, fS, fG2M);
-    if (cells.size()> 10000 ){
+    if (cells.size()> 1e8 ){
          LabelIndex[Label]++;
     }else{
     cells.push_back(a);
@@ -98,7 +98,7 @@ void cell_as_newd::divideordie(std::vector<cell_as_newd> &cells,
     //std::cout << "AnimalTC: " << AnimalTc << "   std: "<<  rInitParameter.sAnimal << "\n";
     cell_as_newd a(LastCell, Index, rInitParameter, AnimalTc, InitAge - nTc, Label,
               KillTime, nTc, GF, fG1, fS, fG2M);
-    if (cells.size()> 10000 ){
+    if (cells.size()> 1e8 ){
          LabelIndex[Label]++;
     }else{
     cells.push_back(a);
@@ -145,7 +145,7 @@ void cell_sym::divideordie(std::vector<cell_sym> &cells,
                KillTime, nTc, GF, fG1, fS, fG2M);
     cell_sym b(LastCell + 1, Index, rInitParameter, AnimalTc, InitAge - nTc,
                Label, KillTime, nTc, GF, fG1, fS, fG2M);
-    if (cells.size()> 10000 ){
+    if (cells.size()> 1e8 ){
          LabelIndex[Label]++;
     }else{
     cells.push_back(a);
