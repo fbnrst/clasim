@@ -44,7 +44,5 @@ def run(mode=2, samples=1000, nCells=100, mCells=100, times=[0.01,0.2,0.5], GF=1
         A list containing time points of measuremnets with size len(times)*samples.
         
     """
-    lcells =  _clasim.run(seed, samples, nCells, mCells, times, GF, G1, S, G2M, 
+    return  _clasim.run(seed, samples, nCells, mCells, times, GF, G1, S, G2M, 
                        sCells, sSamples, mode)
-    times = np.ravel(np.array(times)[:,np.newaxis]*np.ones(samples))
-    return lcells,times
